@@ -1,0 +1,18 @@
+{% extends 'base_main.html' %}
+
+{% block content %}
+{% if message %}
+<p class="message">{{ message | safe }}</p>
+{% endif %}
+<form method="POST">
+    <h5>Please enter a new truck ID </h5>
+    <textarea
+      name="comments"
+      id=""
+      placeholder="Type Truck ID">{{ request.form['comments'] }}</textarea>
+      <input type="submit" value="Save"  class="btn btn-success">
+
+</form>
+<hr>
+
+{% endblock %}

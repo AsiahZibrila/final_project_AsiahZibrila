@@ -1,0 +1,86 @@
+{% extends 'base_main.html' %}
+
+{% block title %}Optimize{% endblock %}
+  {% block head %}
+
+    <script src="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.js"></script>
+    <link type="text/css" rel="stylesheet" 
+    href="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.css"/>
+
+  {% endblock %}
+
+{% block content %}
+<button id="showButton" type="button">Show nav input</button>
+<p>Get the Optimum Route connecting multiple destinations.</p>
+
+
+    <div id="map" style="width: 100%; height: 530px;"></div>
+    <hr>
+    <div class="formBlock" id="fmblock">
+      <form id="form">
+          <input type="text" name="start" class="input" id="start" placeholder="Start: Required" value = "" required/>
+	<input type="search" name="wp1" class="input" id="wp1" placeholder="Waypoint 1: Required" value = "" required/>
+	<input type="search" name="wp2" class="input" id="wp2" placeholder="Waypoint 2: Optional" value = "" />
+	<input type="search" name="wp3" class="input" id="wp3" placeholder="Waypoint 3: Optional" value = "" />
+	<input type="search" name="wp4" class="input" id="wp4" placeholder="Waypoint 4: Optional" value = "" />
+          <input type="text" name="end" class="input" id="destination" placeholder="End: Required" value = "" required/>
+          <button type="submit">Optimize Route</button><button type="reset">Clear</button><button id="hideButton" type="button" style="float: right;">Hide</button>
+      </form>
+  </div>
+
+
+  <script type="text/javascript">
+
+window.onload = function() {
+        placeSearch({
+          key: 'RD5aTRwDtr4AfEJMzvobnwuSLqD8iAjY',
+          container: document.querySelector('#start'),
+          useDeviceLocation: true,
+        });
+        placeSearch({
+          key: 'RD5aTRwDtr4AfEJMzvobnwuSLqD8iAjY',
+          container: document.querySelector('#wp1'),
+          useDeviceLocation: true,
+        });
+        placeSearch({
+          key: 'RD5aTRwDtr4AfEJMzvobnwuSLqD8iAjY',
+          container: document.querySelector('#wp2'),
+          useDeviceLocation: true,
+        });
+        placeSearch({
+          key: 'RD5aTRwDtr4AfEJMzvobnwuSLqD8iAjY',
+          container: document.querySelector('#wp3'),
+          useDeviceLocation: true,
+        });
+        placeSearch({
+          key: 'RD5aTRwDtr4AfEJMzvobnwuSLqD8iAjY',
+          container: document.querySelector('#wp4'),
+          useDeviceLocation: true,
+        });
+        placeSearch({
+          key: 'RD5aTRwDtr4AfEJMzvobnwuSLqD8iAjY',
+          container: document.querySelector('#destination'),
+          useDeviceLocation: true,
+        });
+      }
+
+    $(document).ready(function(){
+                $("#hideButton").click(function(){
+                    $("#fmblock").hide()
+                });
+              });
+    $(document).ready(function(){
+                $("#showButton").click(function(){
+                    $("#fmblock").show()
+                });
+              });
+
+  /*
+  ** change from miles to km
+  ** 
+  */
+  </script>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='optimize.js') }}"></script>
+{% endblock %}

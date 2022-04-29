@@ -1,0 +1,102 @@
+{% extends 'base_main.html' %}
+
+{% block title %}Find Route{% endblock %}
+  {% block head %}
+
+    <link type="text/css" rel="stylesheet" 
+    href="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.css" />
+    <!--link rel="stylesheet" href="css/style.css" /-->
+    <!--Leaflet-->
+    <!--link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" 
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" /-->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" 
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+    <!--mapquest-->
+    <script src="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.js"></script>
+
+  {% endblock %}
+
+{% block content %}
+Lat: <div id="meLat"></div>
+Lon: <div id="meLon"></div>
+
+    <button id="showButton" type="button">Show nav input</button>
+
+    <div id="map" style="width: 100%; height: 530px;"></div>
+    <hr>
+
+    <div class="formBlock" id="fmblock">
+      <p>Use your current location?.</p>
+        <label class="switch">
+          <input type="checkbox" id="myButton" onclick="Buttontoggle()">
+          <span class="slider round"></span>
+        </label>
+      <form id="form">
+          <input type="search" name="start" class="input" id="origin" placeholder="Search origin"  />
+          <input type="search" name="end" class="input" id="destination" placeholder="Search destination" />
+          <button type="submit">Start</button><button type="reset">Clear</button><button id="hideButton" type="button" style="float: right;">Hide</button>
+      </form>
+  </div>
+
+  <script type="text/javascript">
+
+window.onload = function() {
+        placeSearch({
+          key: 'RD5aTRwDtr4AfEJMzvobnwuSLqD8iAjY',
+          container: document.querySelector('#origin'),
+          useDeviceLocation: true,
+        });
+        placeSearch({
+          key: 'RD5aTRwDtr4AfEJMzvobnwuSLqD8iAjY',
+          container: document.querySelector('#destination'),
+          useDeviceLocation: true,
+        });
+      }
+
+    function Buttontoggle() {
+      var checkBox = document.getElementById("myButton");
+      if (checkBox.checked == true) {
+        watchMe();
+        $("#origin").hide()
+      } else {
+        $("#origin").show()
+      }
+    }
+
+    $(document).ready(function(){
+                $("#hideButton").click(function(){
+                    $("#fmblock").hide()
+                });
+              });
+    $(document).ready(function(){
+                $("#showButton").click(function(){
+                    $("#fmblock").show()
+                });
+              });
+
+  /*
+  ** change from miles to km
+  ** Optimize route
+  ** 
+  */
+  </script>
+
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='showmyloc.js') }}"></script>
+<script src="{{ url_for('static', filename='route.js') }}"></script>
+
+{% if start and end %}
+<b>Origin:</b><p id="origin1">{{ start }}</p>
+<b>Destination:</b><p id="destination1">{{ end }}</p>
+<script>
+  start = document.getElementById("origin1").innerHTML;
+  end = document.getElementById("destination1").innerHTML;
+  //map.remove();
+  getDirection(start, end);
+  console.log(start);
+  console.log(end);
+</script>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'base_main.html' %}
+
+{% block header %}
+  <h2>{% block title %}Trip details{% endblock %}</h2>
+{% endblock %}
+
+{% block content %}
+
+{% if trip %}
+        <p id="origin"><b>Origin:</b> {{ trip[1] }}</p>
+        <p id="destination"><b>Destination:</b> {{ trip[2] }}</p>
+        <p><b>Distance:</b> {#{ trip[1] }#}</p>
+        <p><b>Departure Date:</b> {{ trip[3] }}</p>
+        <p><b>Driver:</b> {{ driver_uname }}</p>
+        <p><b>Truck:</b> {{ truck_num }}</p>
+        <hr>
+        <h5><b><a class="action btn btn-primary" href="{{ url_for('trips.trip_route', start=trip[1], end=trip[2]) }}">Start this trip</a></h5>
+        <hr>
+{% endif %}
+
+
+
+{% endblock %}

@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>{% block title %}{% endblock %}</title>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" 
+integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<!--Jquery - geojson -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<!--PlaceSearch-Mapquest-->
+<script src="https://api.mqcdn.com/sdk/place-search-js/v1.0.0/place-search.js"></script>
+<link type="text/css" rel="stylesheet" href="https://api.mqcdn.com/sdk/place-search-js/v1.0.0/place-search.css"/>
+
+
+{% block head %}{% endblock %}
+</head>
+
+<nav class="d-flex flex-column flex-md-row align-items-center p-1 px-md-4
+mb-3 border-bottom shadow-sm navbar navbar-expand-lg navbar-light">
+<div class="container-fluid">
+  <a class="navbar-brand font-weight-bold" href="{{ url_for('index') }}">FleetNav</a>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
+  data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" 
+  aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <li class="nav-item">
+  <a href="{{ url_for('index') }}" class="nav-link"><h2>Routing</h2></a>
+  </li>
+  <li class="nav-item">
+  <a href="{{ url_for('optimize') }}" class="nav-link"><h2>Optimize</h2></a> 
+  </li>
+  <li class="nav-item">
+    <a href="{{ url_for('trucks.index') }}" class="nav-link"><h2>Trucks</h2></a> 
+    </li>
+    <li class="nav-item">
+      <a href="{{ url_for('trips.index') }}" class="nav-link"><h2>Trips</h2></a> 
+      </li>
+</ul>
+  {% block search %}
+<!--div>
+    <form class="example" method="post" action="" style="margin:auto;max-width:1000px">
+      <input type="text" placeholder="Search by ISBN, Title, Author..." name="search">
+      <button type="submit"><i class="fa fa-search"></i></button>
+
+    </form>
+</div-->
+    {% endblock %}
+
+    {% if g.person %}
+      <h5><span class="message1">Logged in as: {{ g.person[1] }}</span></h5>
+      <a class="btn btn-danger" href="{{ url_for('auth.logout') }}">Log Out</a>
+    {% else %}
+      <a class="btn btn-info" href="{{ url_for('auth.register') }}">Register</a>
+      <span>  </span>
+      <a class="btn btn-primary" href="{{ url_for('auth.login') }}">Log In</a>
+    {% endif %}
+</div>
+</div>
+</nav>
+
+<body class="content" style="border: 0; margin: 0;">
+
+    {#
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div class='container flashes message'>
+    {% for message in messages %}
+      {{ message }}
+    {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+#}
+
+  <div class="container">
+  {% block content %}{% endblock %}
+  </div>
+
+  {% block scripts %} {% endblock %}
+</body>
+
+</html>

@@ -1,0 +1,31 @@
+{% extends 'base_main.html' %}
+
+{% block header %}
+  <h2>{% block title %}Trips{% endblock %}</h2>
+  {% if trips %}
+  <p>Showing all Trips.</p>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+<a class="btn-primary" href="{{ url_for('trips.addtrip') }}">Add new trip</a>
+{% if trips %}
+	{% for trip in trips %}
+		<h5><a  class="action" href="{{ url_for('trips.trip_detail', id=trip[0]) }}">Origin: {{ trip[1] }} - Destination: {{ trip[2] }} - Date: {{ trip[3] }} </a></h5>
+    <hr>
+  {% endfor %}
+{% endif %}
+
+{#
+{% if bookSearch %}
+<h3 class= "container message1">Search Results for "{{ param }}":</h3>
+	{% for book in bookSearch %}
+		<h5><a  class="action" href="{{ url_for('books.book_detail', isbn=book[0]) }}">(ISBN: {{ book[0] }}) - Title: {{ book[1]}} - [Written by: {{ book[2]}}]</a></h5>
+    <hr>
+  {% endfor %}
+{% else %}
+
+{% endif %}
+#}  
+
+{% endblock %}

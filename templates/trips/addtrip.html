@@ -1,0 +1,43 @@
+{% extends 'base_main.html' %}
+{% block head %}
+    <!--DatePicker-->
+    <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
+    rel = "stylesheet">
+    <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<script>
+          $(function() {
+           $( "#depdate" ).datepicker();
+           //$( "#depdate" ).datepicker("show");
+        });
+</script>
+{% endblock %}
+{% block content %}
+{% if message %}
+<p class="message">{{ message | safe }}</p>
+{% endif %}
+<form method="POST">
+    <h5>Please add a new trip </h5>
+    <textarea name="origin" id="" placeholder="Trip Origin">{{ request.form['origin'] }}</textarea><br>
+    <textarea name="dest" id="" placeholder="Trip Destination">{{ request.form['dest'] }}</textarea><br>
+    <textarea name="comment" id="" placeholder="Additional Information">{{ request.form['comment'] }}</textarea><br>
+    <label for="driver">Assign a driver:</label>
+    <select id="driver" name="driver">
+      {% for driver in drivers %}
+      <option name="driver">{{ driver[0] }}</option>
+      {% endfor %}
+    </select><br>
+    <label for="truck">Choose a truck:</label>
+    <select id="truck" name="truck">
+      {% for truck in trucks %}
+      <option name="truck">{{ truck[0] }}</option>
+      {% endfor %}
+    </select><br>
+    <label for="depdate">Pick Date:</labe>
+    <input type ="text" id = "depdate" name="depdate" placeholder="Click to Pick Date" required />
+    <br>
+    <input type="submit" value="Save"  class="btn btn-success">
+</form>
+<hr>
+
+{% endblock %}
